@@ -94,9 +94,11 @@ nav ul a,nav a:active,nav a:visited,nav a:hover { text-decoration: none; text-sh
 .content { width: 100%; min-height: 200px; position: absolute; clear: both; text-align: center; }
 .content h2 { text-shadow: 0 0 1px rgba(0,0,0,0.3); }
 
-footer { width: 970px; height: 30px; position: absolute; top: 660px; margin: auto auto; padding-top: 1px; letter-spacing: 2px; font-size: 9px; text-align: right; }
+footer { width: 970px; height: 30px; position: absolute; top: 660px; margin: auto auto; padding-top: 1px; letter-spacing: 2px; font-size: 9px; }
+#copyright_text { float: right; }
 
-
+#loading_text { float: left; display: none; }
+.loading #loading_text { display: block; }
 
 
 

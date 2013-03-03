@@ -5,13 +5,19 @@
 
 (function(w){
 
-	var PAGE_FILE_DIR = '';
-	var PAGE_FILE_EXT = '.php';
+	var PAGE_FILE_DIR = '',
+	    PAGE_FILE_EXT = '.php',
+	    app,
+	    rewireHyperlinks,
+	    isLoading,
+	    beginLoading,
+	    finishedLoading;
 
 	// we'll prevent an ajax request going out for initial load
-	var app = w.app = w.app || { pageRequestInProgress: true };
+	app = w.app = w.app || { pageRequestInProgress: true };
 
-	var rewireHyperlinks = function(contextEl){
+	// this function allows us to use regular-looking links in the markup and only decorate with the hash syntax when we call it
+	rewireHyperlinks = function(contextEl){
 		// upgrade hyperlink functionality in JS-able browsers: use hashes instead
 		$('a', contextEl).each(function(){
 			var $this = $(this),
@@ -38,6 +44,23 @@
 		});
 	};
 
+	isLoading = function() {
+		return app.pageRequestInProgress;
+	}
+
+	beginLoading = function() {
+		app.pageRequestInProgress = true;
+		$('body').addClass('loading');
+		console.log("added loading class");
+	};
+
+	finishedLoading = function() {
+		app.pageRequestInProgress = false;
+		$('body').removeClass('loading');
+		console.log("removed loading class");
+	};
+
+	// page change/animation bindings
 	$(document).ready(function(){
 		// hide elements bearing the js_hide class. oh, and flyins, too.
 		var $body = $('body');
@@ -47,19 +70,22 @@
 		rewireHyperlinks($body);
 		$(w).hashchange( function(){
 			// we ignore hashes that don't start with this prefix
-			if ('#!/' == location.hash.substring(0, 3) && !app.pageRequestInProgress) {
-				app.pageRequestInProgress = true;
+			if ('#!/' == location.hash.substring(0, 3) && ! isLoading()) {
+				beginLoading();
 
 				var page_to_get = location.hash.substring(3);
 				$.ajax({
 					url: PAGE_FILE_DIR + page_to_get + PAGE_FILE_EXT,
 					success: function(data) {
+						// find the new content in the pulled markup and inject it into the DOM
 						var $new_content = $(data)
 							.find('.content')
 								.removeClass('active_content')
 								.insertAfter('.active_content')
 								.css({'left': 700, 'display': 'block', 'opacity': 0})
 								.animate({'left': 0, 'opacity': 1}, 'slow');
+
+						// animate out the existing content in the DOM
 						$('.active_content')
 							.removeClass('active_content')
 							.animate({'left': -700, 'opacity': 0}, 'slow', function() {
@@ -67,11 +93,12 @@
 								$(this).remove();
 								rewireHyperlinks($new_content);
 							});
-						app.pageRequestInProgress = false;
+
+						finishedLoading();
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
 						alert("Sorry, the requested page couldn't be shown: \"" + errorThrown + "\"");
-						app.pageRequestInProgress = false;
+						finishedLoading();
 					},
 					dataType: 'html'
 				});
@@ -85,7 +112,7 @@
 	$(w).load(function(){
 		// do some intro animation or initialisation
 		setTimeout(function(){
-			app.pageRequestInProgress = false;
+			finishedLoading();
 		}, 1);
 	});
 

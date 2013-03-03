@@ -1,5 +1,6 @@
 
 	<footer class="gradient">
+		<p id="loading_text">Loading...</p>
 		<div id="copyright_text">
 			<span id="plug">Site by <a href="https://github.com/notatestuser/ajaxy-site-mould">me</a></span>,
 			&copy; Something

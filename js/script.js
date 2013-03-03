@@ -51,13 +51,11 @@
 	beginLoading = function() {
 		app.pageRequestInProgress = true;
 		$('body').addClass('loading');
-		console.log("added loading class");
 	};
 
 	finishedLoading = function() {
 		app.pageRequestInProgress = false;
 		$('body').removeClass('loading');
-		console.log("removed loading class");
 	};
 
 	// page change/animation bindings

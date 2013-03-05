@@ -12,8 +12,8 @@
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 
 <!-- scripts concatenated and minified via ant build script-->
-<script src="js/plugins.js?<?php echo filemtime('js/plugins.js')%100000 ?>"></script>
-<script src="js/script.js?<?php echo filemtime('js/script.js')%100000 ?>"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
 <!-- end scripts-->
 
 <script>

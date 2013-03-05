@@ -20,7 +20,7 @@
 
 	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
 	<link href="http://fonts.googleapis.com/css?family=Shadows+Into+Light|Questrial|Telex" rel="stylesheet" type="text/css">
-	<link href="css/style.css?<?php echo filemtime('css/style.css')%100000 ?>" rel="stylesheet" type="text/css">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
 </head>
